@@ -4,7 +4,7 @@ const colors = require('tailwindcss/colors');
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
-  darkMode: 'class',
+  darkMode: 'media',
   theme: {
     fontFamily: {
       satoshi: ['Satoshi', 'sans-serif'],
@@ -19,6 +19,8 @@ module.exports = {
       colors: {
         current: 'currentColor',
         transparent: 'transparent',
+        webred: '#ec542d',
+        web2red: '#c22c06',
         white: '#FFFFFF',
         black: {
           ...colors.black,
