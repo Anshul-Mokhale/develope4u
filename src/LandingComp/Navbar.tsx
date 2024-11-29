@@ -25,9 +25,9 @@ const Navbar: React.FC = () => {
 
             {/* Navbar Links (Hidden on small screens, visible on large screens) */}
             <ul className="hidden lg:flex gap-4">
-                <li className="list-none"><NavLink to="/">Home</NavLink></li>
-                <li className="list-none"><NavLink to="/about">About</NavLink></li>
-                <li className="list-none"><NavLink to="/contact">Contact</NavLink></li>
+                <li className="list-none"><NavLink to="/" className="hover:text-webred">Home</NavLink></li>
+                <li className="list-none"><NavLink to="/about" className="hover:text-webred">About</NavLink></li>
+                <li className="list-none"><NavLink to="/contact" className="hover:text-webred">Contact</NavLink></li>
                 <li className="list-none"><NavLink className="border-2 px-2 py-1 border-webred bg-webred hover:bg-web2red hover:border-web2red rounded-md text-white" to="/sign-in">Login</NavLink></li>
             </ul>
 
@@ -39,10 +39,10 @@ const Navbar: React.FC = () => {
                     </button>
                 </div>
                 <ul className="flex flex-col items-center gap-6 mt-10">
-                    <li className="list-none"><NavLink to="/" onClick={toggleSidebar}>Home</NavLink></li>
-                    <li className="list-none"><NavLink to="/about" onClick={toggleSidebar}>About</NavLink></li>
-                    <li className="list-none"><NavLink to="/contact" onClick={toggleSidebar}>Contact</NavLink></li>
-                    <li className="list-none"><NavLink to="/sign-in" onClick={toggleSidebar}>Login</NavLink></li>
+                    <li className="list-none"><NavLink to="/" className="hover:text-webred" onClick={toggleSidebar}>Home</NavLink></li>
+                    <li className="list-none"><NavLink to="/about" className="hover:text-webred" onClick={toggleSidebar}>About</NavLink></li>
+                    <li className="list-none"><NavLink to="/contact" className="hover:text-webred" onClick={toggleSidebar}>Contact</NavLink></li>
+                    <li className="list-none"><NavLink to="/sign-in" className="border-2 px-2 py-1 border-webred bg-webred hover:bg-web2red hover:border-web2red rounded-md text-white" onClick={toggleSidebar}>Login</NavLink></li>
                 </ul>
             </div>
         </div>
