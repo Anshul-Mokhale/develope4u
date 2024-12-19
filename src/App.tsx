@@ -38,7 +38,26 @@ function App() {
       {/* Landing Page Routes */}
       <Route path="/" element={<LandingLayout />}>
         <Route index element={<Home />} />
+
       </Route>
+      <Route
+        path="/sign-up"
+        element={
+          <>
+            <PageTitle title="Signup | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+            <SignUp />
+          </>
+        }
+      />
+      <Route
+        path="/sign-in"
+        element={
+          <>
+            <PageTitle title="Signin | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+            <SignIn />
+          </>
+        }
+      />
       {/* Dashboard Routes */}
       <Route path="/*" element={<DefaultLayout />}>
         <Route
@@ -131,24 +150,8 @@ function App() {
             </>
           }
         />
-        <Route
-          path="auth/signin"
-          element={
-            <>
-              <PageTitle title="Signin | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <SignIn />
-            </>
-          }
-        />
-        <Route
-          path="auth/signup"
-          element={
-            <>
-              <PageTitle title="Signup | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <SignUp />
-            </>
-          }
-        />
+
+
       </Route>
     </Routes>
   );

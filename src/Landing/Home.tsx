@@ -1,182 +1,86 @@
-import { useEffect, useState } from 'react';
-import image1 from "../images/home1.png"
-import image2 from "../images/ecommercewebsite.png"
-import image3 from "../images/collegeproject.png"
-import image4 from "../images/messageapk.png"
-import image5 from "../images/Maintenance.png"
+import React from "react";
 import { Link } from "react-router-dom";
-import { FaGoogle, FaFigma, FaDropbox, FaFacebook } from "react-icons/fa";
-import "./home.css";
-
+import { FiArrowRight } from "react-icons/fi";
+import Typewriter from "typewriter-effect";
 const Home: React.FC = () => {
-    const [isVisibleHome3, setIsVisibleHome3] = useState(false);
-    const [isVisibleHome4, setIsVisibleHome4] = useState(false);
-    const [isVisibleHome5, setIsVisibleHome5] = useState(false);
-    const [isVisibleHome6, setIsVisibleHome6] = useState(false);
-    useEffect(() => {
-        const observerHome3 = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        setIsVisibleHome3(true);  // Trigger animation for home-3
-                    }
-                });
-            },
-            { threshold: 0.2 }
-        );
-
-        const observerHome4 = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        setIsVisibleHome4(true);  // Trigger animation for home-4
-                    }
-                });
-            },
-            { threshold: 0.2 }
-        );
-        const observerHome5 = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        setIsVisibleHome5(true);  // Trigger animation for home-3
-                    }
-                });
-            },
-            { threshold: 0.2 }
-        );
-        const observerHome6 = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        setIsVisibleHome6(true);  // Trigger animation for home-3
-                    }
-                });
-            },
-            { threshold: 0.2 }
-        );
-
-        const elementHome3 = document.querySelector('.home-3');
-        const elementHome4 = document.querySelector('.home-4');
-        const elementHome5 = document.querySelector('.home-5');
-        const elementHome6 = document.querySelector('.home-6');
-        if (elementHome3) observerHome3.observe(elementHome3);
-        if (elementHome4) observerHome4.observe(elementHome4);
-        if (elementHome5) observerHome5.observe(elementHome5);
-        if (elementHome6) observerHome6.observe(elementHome6);
-
-        return () => {
-            if (elementHome3) observerHome3.unobserve(elementHome3); // Clean up observer for home-3
-            if (elementHome4) observerHome4.unobserve(elementHome4); // Clean up observer for home-4
-            if (elementHome5) observerHome5.unobserve(elementHome5);
-            if (elementHome6) observerHome6.unobserve(elementHome6);
-        };
-    }, []);
     return (
-        <div className="dark:bg-boxdark pt-16 px-4 pb-4">
-            <div className="home-1 flex flex-col-reverse md:flex-row items-center justify-between p-4 bg-white dark:bg-boxdark-2">
-                <div className="home-1-left flex flex-col gap-4 w-full md:w-1/2 text-center md:text-start">
-                    <h1 className="text-2xl md:text-6xl text-webred font-bold">From Concept to Code, We've Got You Covered</h1>
-                    <p className="text-black-2 dark:text-white">
-                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aspernatur exercitationem cumque, praesentium nobis quia quaerat incidunt ipsam aut reiciendis aliquam non, minima soluta voluptas molestiae rem magni aliquid odit. Et?
-                    </p>
-                    <div>
-                        <Link to='/' className="border-2 px-2 py-1 border-webred bg-webred hover:bg-web2red hover:border-web2red rounded-md text-white">
-                            Get Now
-                        </Link>
-                    </div>
-                </div>
+        <div className="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+            {/* Hero Section */}
+            <section className="flex flex-col  items-center justify-center text-center px-4 py-16 md:py-24 lg:py-32">
+                <h1 className="flex flex-col md:flex-row text-3xl md:text-5xl lg:text-6xl font-bold text-webred mb-6 leading-tight">
+                    Welcome to {" "}
+                    <span className="text-web2red text-4xl">
+                        <Typewriter
+                            options={{
+                                strings: ["Develope4u"],
+                                autoStart: true,
+                                loop: true,
+                                cursor: "|",
+                            }}
+                        />
+                    </span>
+                </h1>
 
-                <div className="home-1-right w-full md:w-1/2">
-                    <img src={image1} alt="Home 1" />
-                </div>
-            </div>
+                <p className="text-base md:text-lg lg:text-xl mb-8 max-w-xl lg:max-w-3xl text-gray-600 dark:text-gray-300">
+                    Building high-quality, responsive, and user-friendly solutions to grow your
+                    business. Let's achieve your goals together.
+                </p>
+                <Link
+                    to="/about"
+                    className="inline-flex items-center bg-webred text-white px-5 py-3 rounded-md shadow-lg hover:bg-web2red hover:translate-y-1 hover:shadow-xl active:translate-y-0 transition-transform duration-300"
+                >
+                    Learn More <FiArrowRight className="ml-2" />
+                </Link>
+            </section>
 
-
-            <div className="home-2 bg-white mt-4 p-4 dark:bg-boxdark-2">
-                <h1 className="text-xl text-center font-bold text-webred">We Work with customer brands and startups</h1>
-                <div className="flex flex-col md:flex-row pt-8 gap-8 md:items-center items-center justify-around">
-                    <li className="list-none text-black dark:text-white icon-slide" style={{ animationDelay: '0.2s' }}>
-                        <FaFacebook style={{ fontSize: '50px' }} />
-                    </li>
-                    <li className="list-none text-black dark:text-white icon-slide" style={{ animationDelay: '0.4s' }}>
-                        <FaGoogle style={{ fontSize: '50px' }} />
-                    </li>
-                    <li className="list-none text-black dark:text-white icon-slide" style={{ animationDelay: '0.6s' }}>
-                        <FaFigma style={{ fontSize: '50px' }} />
-                    </li>
-                    <li className="list-none text-black dark:text-white icon-slide" style={{ animationDelay: '0.8s' }}>
-                        <FaDropbox style={{ fontSize: '50px' }} />
-                    </li>
-                </div>
-            </div>
-
-            <div
-                className={`home-3 flex flex-col md:flex-row items-center justify-between bg-white mt-4 p-4 dark:bg-boxdark-2 ${isVisibleHome3 ? 'animate-fade-in' : ''}`}
-            >
-                <div className="home3-left w-full md:w-1/2">
-                    <h1 className="text-webred font-bold text-3xl text-center md:text-start">
-                        We help design an ecommerce business shop
-                    </h1>
-                    <p className="text-justify pt-2 text-black dark:text-white">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati sequi deserunt atque corporis sint expedita? At ex et, cum, obcaecati hic nisi dolor sapiente molestiae vel numquam odio veniam ea.
+            {/* Features Section */}
+            <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-6 md:px-12 lg:px-20 py-12 bg-gray-50 dark:bg-gray-800">
+                <div className="p-6 bg-white dark:bg-gray-700 rounded-lg shadow-md hover:shadow-lg transition duration-300">
+                    <h2 className="text-xl md:text-2xl font-semibold text-webred mb-3">
+                        🚀 Fast Development
+                    </h2>
+                    <p className="text-gray-600 dark:text-gray-300">
+                        We deliver projects quickly without compromising quality using agile
+                        practices.
                     </p>
                 </div>
-                <div className="home3-right flex justify-end w-full md:w-1/2">
-                    <img src={image2} alt="Ecommerce Business" className="w-full max-w-lg h-auto object-contain" />
-                </div>
-            </div>
 
-            <div
-                className={`home-4 flex flex-col md:flex-row items-center justify-between bg-white mt-4 p-4 dark:bg-boxdark-2 ${isVisibleHome4 ? 'animate-fade-in' : ''}`}
-            >
-                <div className="home4-left flex justify-start w-full md:w-1/2">
-                    <img src={image3} alt="Ecommerce Business" className="w-full max-w-lg h-auto object-contain" />
-                </div>
-                <div className="home4-right w-full md:w-1/2">
-                    <h1 className="text-webred font-bold text-3xl text-center md:text-start">
-                        We create innovative projects tailored for college students
-                    </h1>
-                    <p className="text-justify pt-2 text-black dark:text-white">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati sequi deserunt atque corporis sint expedita? At ex et, cum, obcaecati hic nisi dolor sapiente molestiae vel numquam odio veniam ea.
+                <div className="p-6 bg-white dark:bg-gray-700 rounded-lg shadow-md hover:shadow-lg transition duration-300">
+                    <h2 className="text-xl md:text-2xl font-semibold text-webred mb-3">
+                        📱 Responsive Design
+                    </h2>
+                    <p className="text-gray-600 dark:text-gray-300">
+                        Designs that look stunning on all devices – desktops, tablets, and mobile.
                     </p>
                 </div>
-            </div>
 
-            <div
-                className={`home-5 flex flex-col md:flex-row items-center justify-between bg-white mt-4 p-4 dark:bg-boxdark-2 ${isVisibleHome5 ? 'animate-fade-in' : ''}`}
-            >
-                <div className="home5-left w-full md:w-1/2">
-                    <h1 className="text-webred font-bold text-3xl text-center md:text-start">
-                        We help design messages app for communication
-                    </h1>
-                    <p className="text-justify pt-2 text-black dark:text-white">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati sequi deserunt atque corporis sint expedita? At ex et, cum, obcaecati hic nisi dolor sapiente molestiae vel numquam odio veniam ea.
+                <div className="p-6 bg-white dark:bg-gray-700 rounded-lg shadow-md hover:shadow-lg transition duration-300">
+                    <h2 className="text-xl md:text-2xl font-semibold text-webred mb-3">
+                        🌐 24/7 Support
+                    </h2>
+                    <p className="text-gray-600 dark:text-gray-300">
+                        Our dedicated team is available to assist you anytime, anywhere.
                     </p>
                 </div>
-                <div className="home5-right flex justify-end w-full md:w-1/2">
-                    <img src={image4} alt="Ecommerce Business" className="w-full max-w-lg h-auto object-contain" />
-                </div>
-            </div>
+            </section>
 
-            <div
-                className={`home-6 flex flex-col md:flex-row items-center justify-between bg-white mt-4 p-4 dark:bg-boxdark-2 ${isVisibleHome6 ? 'animate-fade-in' : ''}`}
-            >
-                <div className="home6-left flex justify-start w-full md:w-1/2">
-                    <img src={image5} alt="Ecommerce Business" className="w-full max-w-lg h-auto object-contain" />
-                </div>
-                <div className="home6-right w-full md:w-1/2">
-                    <h1 className="text-webred font-bold text-3xl text-center md:text-start">
-                        We help maintenance support for customers
-                    </h1>
-                    <p className="text-justify pt-2 text-black dark:text-white">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati sequi deserunt atque corporis sint expedita? At ex et, cum, obcaecati hic nisi dolor sapiente molestiae vel numquam odio veniam ea.
-                    </p>
-                </div>
-            </div>
-
+            {/* Call-to-Action Section */}
+            <section className="flex flex-col items-center text-center px-4 py-16 bg-webred text-white">
+                <h2 className="text-2xl md:text-4xl font-bold mb-4">
+                    Ready to take your business to the next level?
+                </h2>
+                <p className="text-lg mb-6">
+                    Contact us today and let's start building something amazing together.
+                </p>
+                <Link
+                    to="/contact"
+                    className="bg-white text-webred px-6 py-3 rounded-md font-semibold hover:bg-gray-100 hover:translate-y-1 transition-transform duration-300"
+                >
+                    Get In Touch
+                </Link>
+            </section>
         </div>
-    )
+    );
 }
 
 export default Home;
