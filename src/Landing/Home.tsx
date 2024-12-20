@@ -1,15 +1,25 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FiArrowRight } from "react-icons/fi";
 import Typewriter from "typewriter-effect";
+import "./home.css";
+import Loader from "../common/Loader";
 const Home: React.FC = () => {
-    return (
+
+    const [loading, setLoading] = useState<boolean>(true);
+
+    useEffect(() => {
+        setTimeout(() => setLoading(false), 1000);
+    }, []);
+    return loading ? (
+        <Loader />
+    ) : (
         <div className="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
             {/* Hero Section */}
-            <section className="flex flex-col  items-center justify-center text-center px-4 py-16 md:py-24 lg:py-32">
-                <h1 className="flex flex-col md:flex-row text-3xl md:text-5xl lg:text-6xl font-bold text-webred mb-6 leading-tight">
+            <section className="home1 flex flex-col  items-center justify-center text-center px-4 py-16 md:py-24 lg:py-32">
+                <h1 className="flex flex-col md:flex-row text-3xl md:text-5xl lg:text-6xl font-bold md:gap-4 text-webred mb-6 leading-tight">
                     Welcome to {" "}
-                    <span className="text-web2red text-4xl">
+                    <span className="text-web2red text-4xl md:text-6xl">
                         <Typewriter
                             options={{
                                 strings: ["Develope4u"],
@@ -21,9 +31,9 @@ const Home: React.FC = () => {
                     </span>
                 </h1>
 
-                <p className="text-base md:text-lg lg:text-xl mb-8 max-w-xl lg:max-w-3xl text-gray-600 dark:text-gray-300">
-                    Building high-quality, responsive, and user-friendly solutions to grow your
-                    business. Let's achieve your goals together.
+                <p className="text-base md:text-lg lg:text-xl mb-8 max-w-xl lg:max-w-3xl text-gray-300">
+                    Unlock Ready-Made Projects for All Your Needs
+                    Explore, Download, and Customize Projects for Academic, Business, and Professional Goals.
                 </p>
                 <Link
                     to="/about"

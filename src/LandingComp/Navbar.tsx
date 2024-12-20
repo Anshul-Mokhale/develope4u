@@ -41,7 +41,7 @@ const Navbar: React.FC = () => {
             {/* Logo and Title */}
             <div className="flex items-center space-x-2">
                 <img src={navlogo} className="w-14" alt="navbar logo" />
-                <h3 className="text-2xl font-bold text-webred dark:text-gray-200 hidden lg:block">
+                <h3 className="text-2xl font-bold text-webred  hidden lg:block">
                     Develope4u
                 </h3>
             </div>
