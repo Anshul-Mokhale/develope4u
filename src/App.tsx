@@ -23,6 +23,7 @@ import Tables from './pages/Tables';
 import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
 import Home from './Landing/Home';
+import About from './Landing/About';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -37,8 +38,18 @@ function App() {
     <Routes>
       {/* Landing Page Routes */}
       <Route path="/" element={<LandingLayout />}>
-        <Route index element={<Home />} />
-
+        <Route index element={
+          <>
+            <PageTitle title="Develope4u - Developing Dreams Into Digital Reality" />
+            <Home />
+          </>
+        } />
+        <Route path='/about' element={
+          <>
+            <PageTitle title="About | Develope4u - Developing Dreams Into Digital Reality" />
+            <About />
+          </>
+        } />
       </Route>
       <Route
         path="/sign-up"
