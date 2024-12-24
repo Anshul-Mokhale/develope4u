@@ -6,7 +6,9 @@ import Loader from "../common/Loader";
 const About: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(true);
     useEffect(() => {
+        window.scrollTo(0, 0);
         setTimeout(() => setLoading(false), 1000);
+
     }, []);
     return loading ? (
         <Loader />

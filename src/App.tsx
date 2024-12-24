@@ -24,6 +24,10 @@ import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
 import Home from './Landing/Home';
 import About from './Landing/About';
+import Contact from './Landing/Contact';
+import Privacy from './Landing/Privacy';
+import Terms from './Landing/Terms';
+import Refund from './Landing/Refund';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -48,6 +52,30 @@ function App() {
           <>
             <PageTitle title="About | Develope4u - Developing Dreams Into Digital Reality" />
             <About />
+          </>
+        } />
+        <Route path='/contact' element={
+          <>
+            <PageTitle title="Contact | Develope4u - Developing Dreams Into Digital Reality" />
+            <Contact />
+          </>
+        } />
+        <Route path='/privacy-policy' element={
+          <>
+            <PageTitle title="Privacy Policy | Develope4u - Developing Dreams Into Digital Reality" />
+            <Privacy />
+          </>
+        } />
+        <Route path='/terms-and-conditions' element={
+          <>
+            <PageTitle title="Terms and Conditions | Develope4u - Developing Dreams Into Digital Reality" />
+            <Terms />
+          </>
+        } />
+        <Route path='/refund-policy' element={
+          <>
+            <PageTitle title="Refund Policy | Develope4u - Developing Dreams Into Digital Reality" />
+            <Refund />
           </>
         } />
       </Route>

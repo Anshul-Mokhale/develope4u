@@ -11,13 +11,13 @@ const Footer: React.FC = () => {
                 {/* Logo */}
                 <div className="mb-6 md:mb-0 text-start md:text-left">
                     <h1 className="text-2xl font-bold text-webred">Develope4u</h1>
-                    <p className="text-gray-300">Unlock ready-made projects for your needs.</p>
+                    <p className="text-gray-900 dark:text-gray-300">Unlock ready-made projects for your needs.</p>
                 </div>
 
                 {/* Quick Links */}
                 <div className="text-start">
                     <h2 className="text-lg font-semibold text-webred mb-4">Quick Links</h2>
-                    <div className="flex flex-col gap-3 text-gray-300">
+                    <div className="flex flex-col gap-3 text-gray-900 dark:text-gray-300">
                         <Link to="/" className="hover:underline">Home</Link>
                         <Link to="/about" className="hover:underline">About</Link>
                         <Link to="/contact" className="hover:underline">Contact</Link>
@@ -28,9 +28,10 @@ const Footer: React.FC = () => {
                 {/* Legal Links */}
                 <div className="text-start md:text-start">
                     <h2 className="text-lg font-semibold text-webred mb-4">Legal</h2>
-                    <div className="flex flex-col gap-3 text-gray-300">
+                    <div className="flex flex-col gap-3 text-gray-900 dark:text-gray-300">
                         <Link to="/terms-and-conditions" className="hover:underline">Terms and Conditions</Link>
                         <Link to="/privacy-policy" className="hover:underline">Privacy Policy</Link>
+                        <Link to="/refund-policy" className="hover:underline">Refund Policy</Link>
                     </div>
                 </div>
             </div>
