@@ -1,10 +1,30 @@
 import React, { useState, useEffect } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import LogoDark from '../../images/lgo.png';
 import Loader from "../../common/Loader";
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser } from "../../redux/auth/loginUserSlice";
+import { RootState, AppDispatch } from "../../redux/store";
 
 const SignIn: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const dispatch = useDispatch<AppDispatch>();
+  const { formloading, error, token } = useSelector((state: RootState) => state.loginUser);
+  const navigate = useNavigate();
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    dispatch(loginUser({ email, password }));
+  };
+
+  useEffect(() => {
+    if (token) {
+      console.log("Token updated:", token);
+      navigate('/dashboard');
+    }
+  }, [token, navigate]);
 
   useEffect(() => {
     setTimeout(() => setLoading(false), 1000);
@@ -160,7 +180,7 @@ const SignIn: React.FC = () => {
                 Sign In to Develope4u
               </h2>
 
-              <form>
+              <form onSubmit={handleSubmit}>
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
                     Email
@@ -169,6 +189,8 @@ const SignIn: React.FC = () => {
                     <input
                       type="email"
                       placeholder="Enter your email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
 
@@ -194,12 +216,14 @@ const SignIn: React.FC = () => {
 
                 <div className="mb-6">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
-                    Re-type Password
+                    Enter Password
                   </label>
                   <div className="relative">
                     <input
                       type="password"
                       placeholder="6+ Characters, 1 Capital letter"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
 
@@ -230,7 +254,8 @@ const SignIn: React.FC = () => {
                 <div className="mb-5">
                   <input
                     type="submit"
-                    value="Sign In"
+                    value={formloading ? 'Logging in...' : 'Login'}
+                    disabled={formloading}
                     className="w-full cursor-pointer rounded-lg border border-webred bg-webred p-4 text-white transition hover:bg-opacity-90"
                   />
                 </div>
