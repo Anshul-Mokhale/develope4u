@@ -116,7 +116,7 @@ function App() {
           }
         />
         <Route
-          path="user/calendar"
+          path="calendar"
           element={
             <ProtectedRoute>
               <>

@@ -8,10 +8,12 @@ import UserOne from '../../images/user/user-01.png';
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dispatch = useDispatch();
+  // const navigate = useNavigate();
 
   const handleLogout = () => {
     dispatch(logout());
     setDropdownOpen(false);
+    // navigate('/sign-in');
   };
 
   return (

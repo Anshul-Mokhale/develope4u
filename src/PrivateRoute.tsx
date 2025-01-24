@@ -12,7 +12,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
     const isAuthenticated = useSelector((state: RootState) => (state.auth as { isAuthenticated: boolean }).isAuthenticated);
 
     if (!isAuthenticated) {
-        return <Navigate to="/user/sign-in" />;
+        return <Navigate to="/sign-in" />;
     }
 
     return <>{children || <Outlet />}</>;

@@ -6,9 +6,12 @@ interface AuthState {
     token: string | null;
 }
 
+// Load token from local storage
+const token = localStorage.getItem('token');
+
 const initialState: AuthState = {
-    isAuthenticated: false,
-    token: null,
+    isAuthenticated: !!token,
+    token: token,
 };
 
 const authSlice = createSlice({
@@ -18,10 +21,40 @@ const authSlice = createSlice({
         login: (state, action: PayloadAction<{ token: string }>) => {
             state.isAuthenticated = true;
             state.token = action.payload.token;
+            localStorage.setItem('token', action.payload.token); // Save token to local storage
         },
         logout: (state) => {
-            state.isAuthenticated = false;
-            state.token = null;
+            if (state.token) {
+                fetch('https://code.develope4u.site/api/v1/user/logout', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${state.token}`,
+                        'Content-Type': 'application/json',
+                    },
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Logout successful:', data);
+                    })
+                    .catch(error => {
+                        console.error('There was a problem with the logout request:', error);
+                    })
+                state.isAuthenticated = false;
+                state.token = null;
+                localStorage.removeItem('token');
+                // .finally(() => {
+                //     window.location.href = '/sign-in'; // Redirect to sign-in page
+                // });
+            } else {
+                console.log('No token found');
+                // window.location.href = '/sign-in'; // Redirect to sign-in page
+            }
+            // Remove token from local storage
         },
     },
 });
