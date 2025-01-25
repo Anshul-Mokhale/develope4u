@@ -11,20 +11,23 @@ const SignIn: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const dispatch = useDispatch<AppDispatch>();
-  const { formloading, error, token } = useSelector((state: RootState) => state.loginUser);
+  const { formloading, error, loggedIn } = useSelector((state: RootState) => state.loginUser);
   const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!email || !password) {
+      alert("Please enter both email and password.");
+      return;
+    }
     dispatch(loginUser({ email, password }));
   };
 
   useEffect(() => {
-    if (token) {
-      console.log("Token updated:", token);
-      navigate('/dashboard');
+    if (loggedIn) {
+      navigate('/dashboard'); // Redirect if user is logged in
     }
-  }, [token, navigate]);
+  }, [loggedIn]);
 
   useEffect(() => {
     setTimeout(() => setLoading(false), 1000);
@@ -34,7 +37,7 @@ const SignIn: React.FC = () => {
   ) : (
     <>
 
-      <div className=" h-screen rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+      <div className=" h-screen md:h-full rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="flex flex-wrap items-center">
           <div className="hidden w-full xl:block xl:w-1/2">
             <div className="py-17.5 px-26 text-center">
@@ -179,6 +182,15 @@ const SignIn: React.FC = () => {
               <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
                 Sign In to Develope4u
               </h2>
+
+              {error && (
+                <div className="mb-4 flex items-center gap-2 rounded-lg border border-red-500 bg-red-50 p-4 text-red-500">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                  </svg>
+                  <span>{error}</span>
+                </div>
+              )}
 
               <form onSubmit={handleSubmit}>
                 <div className="mb-4">

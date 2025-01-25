@@ -25,6 +25,7 @@ const loginUserSlice = createSlice({
         formloading: false,
         error: '',
         token: null,
+        loggedIn: false,
     },
     reducers: {},
     extraReducers: (builder) => {
@@ -34,6 +35,7 @@ const loginUserSlice = createSlice({
             })
             .addCase(loginUser.fulfilled, (state, action) => {
                 state.formloading = false;
+                state.loggedIn = true;
                 state.token = action.payload;
                 state.error = '';
             })

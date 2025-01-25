@@ -1,19 +1,25 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../redux/auth/authSlice';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ClickOutside from '../ClickOutside';
 import UserOne from '../../images/user/user-01.png';
+import { RootState, AppDispatch } from '../../redux/store';
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const dispatch = useDispatch();
-  // const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+  const { logoutLoading, logoutError } = useSelector((state: RootState) => state.auth);
 
-  const handleLogout = () => {
-    dispatch(logout());
+  const handleLogout = async () => {
     setDropdownOpen(false);
-    // navigate('/sign-in');
+    const result = await dispatch(logout());
+    if (logout.fulfilled.match(result)) {
+      navigate('/sign-in'); // Redirect only if logout is successful
+    } else {
+      console.error('Logout failed:', result.payload || logoutError);
+    }
   };
 
   return (
@@ -61,9 +67,10 @@ const DropdownUser = () => {
           <button
             onClick={handleLogout}
             className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium text-danger duration-300 ease-in-out hover:text-red-600 lg:text-base"
+            disabled={logoutLoading}
           >
             <svg className="fill-current" width="22" height="22" xmlns="http://www.w3.org/2000/svg">...</svg>
-            Logout
+            {logoutLoading ? 'Logging out...' : 'Logout'}
           </button>
         </div>
       )}

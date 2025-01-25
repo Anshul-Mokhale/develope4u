@@ -1,9 +1,10 @@
-// src/redux/auth/authSlice.ts
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 
 interface AuthState {
     isAuthenticated: boolean;
     token: string | null;
+    logoutLoading: boolean;
+    logoutError: string | null;
 }
 
 // Load token from local storage
@@ -12,7 +13,46 @@ const token = localStorage.getItem('token');
 const initialState: AuthState = {
     isAuthenticated: !!token,
     token: token,
+    logoutLoading: false,
+    logoutError: null,
 };
+
+// Async thunk for handling logout
+export const logout = createAsyncThunk(
+    'auth/logout',
+    async (_, { getState, rejectWithValue }) => {
+        const state = getState() as { auth: AuthState };
+        const token = state.auth.token;
+
+        if (!token) {
+            return rejectWithValue('No token found');
+        }
+
+        try {
+            const response = await fetch('https://code.develope4u.site/api/v1/user/logout', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to logout');
+            }
+
+            const data = await response.json();
+            if (data.success) {
+                localStorage.removeItem('token');
+                return data;
+            } else {
+                throw new Error(data.message || 'Logout unsuccessful');
+            }
+        } catch (error: any) {
+            return rejectWithValue(error.message || 'Logout failed');
+        }
+    }
+);
 
 const authSlice = createSlice({
     name: 'auth',
@@ -21,43 +61,26 @@ const authSlice = createSlice({
         login: (state, action: PayloadAction<{ token: string }>) => {
             state.isAuthenticated = true;
             state.token = action.payload.token;
-            localStorage.setItem('token', action.payload.token); // Save token to local storage
+            localStorage.setItem('token', action.payload.token);
         },
-        logout: (state) => {
-            if (state.token) {
-                fetch('https://code.develope4u.site/api/v1/user/logout', {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${state.token}`,
-                        'Content-Type': 'application/json',
-                    },
-                })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        console.log('Logout successful:', data);
-                    })
-                    .catch(error => {
-                        console.error('There was a problem with the logout request:', error);
-                    })
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(logout.pending, (state) => {
+                state.logoutLoading = true;
+                state.logoutError = null;
+            })
+            .addCase(logout.fulfilled, (state) => {
                 state.isAuthenticated = false;
                 state.token = null;
-                localStorage.removeItem('token');
-                // .finally(() => {
-                //     window.location.href = '/sign-in'; // Redirect to sign-in page
-                // });
-            } else {
-                console.log('No token found');
-                // window.location.href = '/sign-in'; // Redirect to sign-in page
-            }
-            // Remove token from local storage
-        },
+                state.logoutLoading = false;
+            })
+            .addCase(logout.rejected, (state, action) => {
+                state.logoutLoading = false;
+                state.logoutError = action.payload as string;
+            });
     },
 });
 
-export const { login, logout } = authSlice.actions;
+export const { login } = authSlice.actions;
 export default authSlice.reducer;

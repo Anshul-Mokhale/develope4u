@@ -17,7 +17,7 @@ export const registerUser = createAsyncThunk(
     'auth/registerUser',
     async (formData: FormData, { rejectWithValue }) => {
         try {
-            const response = await axios.post('http://code.develope4u.site/api/v1/user/add-user', formData, {
+            const response = await axios.post('https://code.develope4u.site/api/v1/user/add-user', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

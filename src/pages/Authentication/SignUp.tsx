@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import LogoDark from '../../images/lgo.png';
 import Loader from '../../common/Loader';
 import { FiUser } from "react-icons/fi";
@@ -19,6 +19,21 @@ const SignUp: React.FC = () => {
   const dispatch = useDispatch<any>();
   const [loading, setLoading] = useState<boolean>(true);
   const [userType, setUserType] = useState<string>("student");
+  const [name, setName] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [phone, setPhone] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [age, setAge] = useState<string>('');
+  const [collegeName, setCollegeName] = useState<string>('');
+  const [fieldOfStudy, setFieldOfStudy] = useState<string>('');
+  const [graduationYear, setGraduationYear] = useState<string>('');
+  const [identityProof, setIdentityProof] = useState<File | null>(null);
+  const [companyName, setCompanyName] = useState<string>('');
+  const [companyField, setCompanyField] = useState<string>('');
+  const [repassword, setRepassword] = useState<string>('');
+  const [error, setError] = useState<string>('');
+  const [formloading, setFormLoading] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setTimeout(() => setLoading(false), 1000);
@@ -28,37 +43,46 @@ const SignUp: React.FC = () => {
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
-    const userType = formData.get('userType');
 
     // Common fields
     const userData: Record<string, any> = {
-      name: formData.get('name'),
-      email: formData.get('email'),
-      phone: formData.get('phone'),
-      password: formData.get('password'),
-      userType,
-      age: formData.get('age'),
+      name: name,
+      email: email,
+      phone: phone,
+      password: password,
+      user_type: userType, // Use the state value directly
+      age: age,
     };
 
     // Conditional fields based on userType
     if (userType === 'student') {
-      userData.collegeName = formData.get('collegeName');
-      userData.fieldOfStudy = formData.get('fieldOfStudy');
-      userData.graduationYear = formData.get('graduationYear');
-      userData.identityProof = formData.get('identityProof');
+      userData.college_name = collegeName;
+      userData.field_of_study = fieldOfStudy;
+      userData.graduation_year = graduationYear;
+      userData.image = identityProof;
     } else if (userType === 'business') {
-      userData.companyName = formData.get('companyName');
-      userData.companyField = formData.get('companyField');
+      userData.company_name = companyName;
+      userData.company_field = companyField;
     }
 
     try {
+      setFormLoading(true);
       const formDataToSend = new FormData();
       Object.keys(userData).forEach(key => formDataToSend.append(key, userData[key]));
       // dispatch(registerUser(formDataToSend));
       // alert('Registration successful!');
       // console.log('Form Data:', Object.fromEntries(formDataToSend.entries()));
+      if (password !== repassword) {
+        setError('Passwords do not match');
+        return;
+      }
       const response = await dispatch(registerUser(formDataToSend));
       console.log('Registration Response:', response);
+
+      setFormLoading(false);
+      if (response.type.includes('fulfilled')) {
+        navigate('/sign-in');
+      }
       // Handle successful registration (e.g., redirect to login page)
     } catch (error) {
       // Handle registration error
@@ -76,6 +100,8 @@ const SignUp: React.FC = () => {
           <input
             type="number"
             placeholder="Enter your age"
+            value={age}
+            onChange={(e) => setAge(e.target.value)}
             className="w-full rounded-lg border bg-transparent py-4 pl-6 text-black outline-none focus:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white"
           />
 
@@ -92,6 +118,8 @@ const SignUp: React.FC = () => {
           <input
             type="text"
             placeholder="Enter College name"
+            value={collegeName}
+            onChange={(e) => setCollegeName(e.target.value)}
             className="w-full rounded-lg border bg-transparent py-4 pl-6 text-black outline-none focus:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white"
           />
 
@@ -108,6 +136,8 @@ const SignUp: React.FC = () => {
           <input
             type="text"
             placeholder="Enter Field of Study"
+            value={fieldOfStudy}
+            onChange={(e) => setFieldOfStudy(e.target.value)}
             className="w-full rounded-lg border bg-transparent py-4 pl-6 text-black outline-none focus:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white"
           />
 
@@ -123,6 +153,8 @@ const SignUp: React.FC = () => {
         <input
           type="text"
           placeholder="Enter Graduation year"
+          value={graduationYear}
+          onChange={(e) => setGraduationYear(e.target.value)}
           className="w-full rounded-lg border bg-transparent py-4 pl-6 text-black outline-none focus:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white"
         />
 
@@ -136,6 +168,8 @@ const SignUp: React.FC = () => {
         </label>
         <input
           type="file"
+          placeholder="Upload Identity Proof"
+          onChange={(e) => setIdentityProof(e.target.files?.[0] || null)}
           className="w-full rounded-lg border bg-transparent py-4 pl-6 text-black outline-none focus:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white"
         />
       </div>
@@ -152,6 +186,8 @@ const SignUp: React.FC = () => {
           <input
             type="number"
             placeholder="Enter your age"
+            value={age}
+            onChange={(e) => setAge(e.target.value)}
             className="w-full rounded-lg border bg-transparent py-4 pl-6 text-black outline-none focus:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white"
           />
 
@@ -168,6 +204,8 @@ const SignUp: React.FC = () => {
           <input
             type="text"
             placeholder="Enter Company name"
+            value={companyName}
+            onChange={(e) => setCompanyName(e.target.value)}
             className="w-full rounded-lg border bg-transparent py-4 pl-6 text-black outline-none focus:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white"
           />
 
@@ -184,6 +222,8 @@ const SignUp: React.FC = () => {
           <input
             type="text"
             placeholder="Enter Company name"
+            value={companyField}
+            onChange={(e) => setCompanyField(e.target.value)}
             className="w-full rounded-lg border bg-transparent py-4 pl-6 text-black outline-none focus:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white"
           />
 
@@ -373,6 +413,8 @@ const SignUp: React.FC = () => {
                     <input
                       type="email"
                       placeholder="Enter your email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
 
@@ -389,6 +431,8 @@ const SignUp: React.FC = () => {
                     <input
                       type="text"
                       placeholder="Enter your phone number"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
 
@@ -406,6 +450,8 @@ const SignUp: React.FC = () => {
                     <input
                       type="password"
                       placeholder="Enter your password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
 
@@ -423,6 +469,8 @@ const SignUp: React.FC = () => {
                     <input
                       type="password"
                       placeholder="Re-enter your password"
+                      value={repassword}
+                      onChange={(e) => setRepassword(e.target.value)}
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
 
@@ -447,11 +495,34 @@ const SignUp: React.FC = () => {
 
                 {userType === "student" ? renderStudentFields() : renderBusinessFields()}
                 <div className="mb-5">
-                  <input
+                  <button
                     type="submit"
-                    value="Create account"
-                    className="w-full cursor-pointer rounded-lg border border-webred bg-webred p-4 text-white transition hover:bg-opacity-90"
-                  />
+                    disabled={formloading}
+                    className="w-full cursor-pointer rounded-lg border border-webred bg-webred p-4 text-white transition hover:bg-opacity-90 flex items-center justify-center"
+                  >
+                    {formloading ? (
+                      <>
+                        <svg className="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24">
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          />
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                          />
+                        </svg>
+                        Creating account...
+                      </>
+                    ) : (
+                      'Create account'
+                    )}
+                  </button>
                 </div>
 
                 <button className="flex w-full items-center justify-center gap-3.5 rounded-lg border border-stroke bg-gray p-4 hover:bg-opacity-50 dark:border-strokedark dark:bg-meta-4 dark:hover:bg-opacity-50">
