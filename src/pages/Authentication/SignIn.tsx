@@ -17,17 +17,15 @@ const SignIn: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !password) {
-      alert("Please enter both email and password.");
+      alert('Please enter both email and password.');
       return;
     }
-    dispatch(loginUser({ email, password }));
+    dispatch(loginUser({ email, password })).then((action) => {
+      if (action.meta.requestStatus === 'fulfilled') {
+        navigate('/dashboard');
+      }
+    });
   };
-
-  useEffect(() => {
-    if (loggedIn) {
-      navigate('/dashboard'); // Redirect if user is logged in
-    }
-  }, [loggedIn]);
 
   useEffect(() => {
     setTimeout(() => setLoading(false), 1000);

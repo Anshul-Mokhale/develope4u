@@ -13,8 +13,8 @@ const DropdownUser = () => {
   const { logoutLoading, logoutError } = useSelector((state: RootState) => state.auth);
 
   const handleLogout = async () => {
-    setDropdownOpen(false);
-    const result = await dispatch(logout());
+    setDropdownOpen(false); // Close the dropdown
+    const result = await dispatch(logout()); // Dispatch the logout action
     if (logout.fulfilled.match(result)) {
       navigate('/sign-in'); // Redirect only if logout is successful
     } else {
