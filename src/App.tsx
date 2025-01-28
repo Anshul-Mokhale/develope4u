@@ -26,6 +26,8 @@ import Privacy from './Landing/Privacy';
 import Terms from './Landing/Terms';
 import Refund from './Landing/Refund';
 import { RootState } from './redux/store'; // Assuming you have a redux store set up
+import Admin from './pages/Dashboard/Admin';
+import AdminSignin from './pages/Authentication/AdminSignin';
 
 // Protected route component using Redux state for authentication
 const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
@@ -95,6 +97,12 @@ function App() {
           <SignUp />
         </>
       } />
+      <Route path="/admin/sign-in" element={
+        <>
+          <PageTitle title="Signup | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+          <AdminSignin />
+        </>
+      } />
       <Route path="/sign-in" element={
         <>
           <PageTitle title="Signin | TailAdmin - Tailwind CSS Admin Dashboard Template" />
@@ -111,6 +119,17 @@ function App() {
               <>
                 <PageTitle title="eCommerce Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template" />
                 <ECommerce />
+              </>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='admin/dashboard'
+          element={
+            <ProtectedRoute>
+              <>
+                <PageTitle title="Admin Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                <Admin />
               </>
             </ProtectedRoute>
           }

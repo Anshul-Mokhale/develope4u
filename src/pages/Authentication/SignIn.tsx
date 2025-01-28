@@ -11,7 +11,7 @@ const SignIn: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const dispatch = useDispatch<AppDispatch>();
-  const { formloading, error, loggedIn } = useSelector((state: RootState) => state.loginUser);
+  const { formloading, error } = useSelector((state: RootState) => state.loginUser);
   const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
