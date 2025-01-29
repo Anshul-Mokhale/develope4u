@@ -38,6 +38,8 @@ const loginUserSlice = createSlice({
                 state.formloading = false;
                 state.loggedIn = true;
                 state.token = action.payload;
+                localStorage.setItem('userType', 'user');
+                localStorage.setItem('token', action.payload)
                 state.error = '';
             })
             .addCase(loginUser.rejected, (state, action) => {

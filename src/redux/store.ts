@@ -3,6 +3,7 @@ import loginUserReducer from './auth/loginUserSlice'
 import authReducer from './auth/authSlice'
 import registerUserReducer from './auth/registerUserSlice'
 import adminLoginReducer from './auth/loginAdminSlice'
+import fetchValueReducer from './admin/fetchValueSlice'
 
 export const store = configureStore({
     reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
         auth: authReducer,
         registerUser: registerUserReducer,
         adminLogin: adminLoginReducer,
+        fetchValue: fetchValueReducer,
     },
 })
 

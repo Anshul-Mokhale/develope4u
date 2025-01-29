@@ -38,6 +38,8 @@ const loginAdminSlice = createSlice({
                 state.formloading = false;
                 state.loggedIn = true;
                 state.token = action.payload;
+                localStorage.setItem('userType', 'admin');
+                localStorage.setItem('token', action.payload)
                 state.error = '';
             })
             .addCase(loginAdmin.rejected, (state, action) => {
